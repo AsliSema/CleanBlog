@@ -38,6 +38,13 @@ app.get("/", async (request, response) => {
     });  //EJS modülü kullanıldığı için
 });
 
+app.get("/posts/:id", async (request, response) => {
+    const post = await Post.findById(request.params.id);
+    response.render("post", {
+        post
+    });
+});
+
 app.get("/about", (request, response) => {
     response.render("about");
 });
