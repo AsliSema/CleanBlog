@@ -1,11 +1,11 @@
 const express = require("express");
 const mongoose = require("mongoose");
-
+const methodOverride = require('method-override');
 const ejs = require("ejs");
-const path = require("path");
-
-const Post = require("./models/Post");
-
+//const path = require("path");
+//const Post = require("./models/Post");
+const postController = require("./controllers/postControllers");
+const pageController = require("./controllers/pageControllers");
 //const { response } = require("express");
 
 const app = express();
@@ -20,51 +20,26 @@ app.set("view engine", "ejs");
 app.use(express.static('public'));
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
+app.use(methodOverride('_method', {
+    methods: ["POST", "GET"]
+}));
 
 
 
 //routes
-app.get("/", async (request, response) => {
-/*     const blog = {
-        id: 1,
-        title: "Blog title",
-        description: "Blog description"
-    };
-    responce.send(blog); */
-    //responce.sendFile(path.resolve(__dirname, "temp/index.html"));
-    const posts = await Post.find();
-    response.render("index", {
-        posts
-    });  //EJS modülü kullanıldığı için
-});
+app.get("/", postController.getAllPosts);
+app.get("/posts/:id", postController.getPost);
+app.post("/posts", postController.createPost);
+app.put("/posts/:id", postController.updatePost);
+app.delete("/posts/:id", postController.deletePost);
 
-app.get("/posts/:id", async (request, response) => {
-    const post = await Post.findById(request.params.id);
-    response.render("post", {
-        post
-    });
-});
 
-app.get("/about", (request, response) => {
-    response.render("about");
-});
-
-app.get("/add_post", (request, response) => {
-    response.render("add_post");
-});
-
-app.get("/post", (request, response) => {
-    response.render("post");
-});
-
-app.post("/posts", async (request, response) => {
-    await Post.create(request.body);
-    response.redirect("/");
-});
+app.get("/about", pageController.getAboutPage);
+app.get("/add_post", pageController.getAddPost);
+app.get("/posts/edit/:id", pageController.getEditPage);
 
 
 port = 3000;
-
 app.listen(port, ()=>{
     console.log(`Sunucu ${port} de başlatıldı.`);
 });

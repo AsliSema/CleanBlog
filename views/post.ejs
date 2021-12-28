@@ -16,7 +16,7 @@
             <h1><%= post.title %></h1>
             <h2 class="subheading"><%= post.detail %></h2>
             <span class="meta">Posted by
-              <a href="#">Start Bootstrap</a>
+              <a href="/#">Start Bootstrap</a>
               <%= post.dateCreated %></span>
           </div>
         </div>
@@ -28,14 +28,28 @@
   <article>
     <div class="container">
       <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="col-lg-8 col-md-8 mx-auto">
           <p><%= post.description %></p>
+        </div>
+        <div class="col-md-2 col-lg-2 mt-5">
+          <!-- Share box -->
+          <div class="tm-bg-green tm-share-box">
+            <div class="text-center">
+              <a href="/posts/edit/<%= post._id %>" class="btn btn-primary p-2 mb-4 tm-btn-animate tm-btn-download tm-icon-download"><span> Update Post </span></a>	
+            </div>	
+            <div class="text-center">
+              <a href="/posts/<%= post._id %>?_method=DELETE" class="btn btn-danger p-2 tm-btn-animate tm-btn-download tm-icon-download"
+                
+                onclick="return confirm('Are You Sure?')"><span>Delete Post</span></a>	
+            </div>								
+          </div>
         </div>
       </div>
     </div>
   </article>
 
   <hr>
+
 
   <!-- Footer -->
 
