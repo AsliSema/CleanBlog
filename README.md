@@ -7,4 +7,4 @@
 
 ## Used Technologies
 
-##### NodeJS, MongoDB
+##### Node.js, MongoDB
